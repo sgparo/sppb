@@ -1,0 +1,54 @@
+Category,Item,Unit,Unit_Price_Low,Unit_Price_High,Supplier,Notes,Last_Updated
+SHINGLES,3-Tab Asphalt (25yr),per_square,80,130,QXO/Beacon,Basic economy option,2025-11-01
+SHINGLES,Architectural (30yr),per_square,100,180,QXO/Beacon,Standard dimensional shingles,2025-11-01
+SHINGLES,Architectural Premium (50yr),per_square,180,250,QXO/Beacon,High-end dimensional with algae resistance,2025-11-01
+SHINGLES,Designer/Luxury,per_square,250,400,QXO/Beacon,Premium appearance mimics slate/shake,2025-11-01
+SHINGLES,GAF Timberline HD,per_square,110,165,QXO/Beacon,Popular mid-range architectural,2025-11-01
+SHINGLES,Owens Corning Duration,per_square,115,170,QXO/Beacon,Popular mid-range architectural,2025-11-01
+SHINGLES,CertainTeed Landmark,per_square,110,165,QXO/Beacon,Popular mid-range architectural,2025-11-01
+UNDERLAYMENT,#15 Felt Paper,per_square,10,20,QXO/Beacon,Basic asphalt-saturated felt,2025-11-01
+UNDERLAYMENT,#30 Felt Paper,per_square,15,30,QXO/Beacon,Heavier duty felt,2025-11-01
+UNDERLAYMENT,Synthetic (Standard),per_square,40,80,QXO/Beacon,Water-resistant synthetic,2025-11-01
+UNDERLAYMENT,Synthetic Premium,per_square,80,120,QXO/Beacon,High-performance synthetic like OC Pro Armor,2025-11-01
+ICE_WATER_SHIELD,Standard Ice & Water,linear_foot,1.50,3.00,QXO/Beacon,36-inch width typical,2025-11-01
+ICE_WATER_SHIELD,Premium Ice & Water,linear_foot,2.00,4.00,QXO/Beacon,Enhanced adhesion like OC WeatherLock,2025-11-01
+METAL,Drip Edge Aluminum,linear_foot,0.50,1.00,QXO/Beacon,Standard profile,2025-11-01
+METAL,Drip Edge Galvanized,linear_foot,0.60,1.20,QXO/Beacon,Corrosion resistant,2025-11-01
+METAL,Drip Edge Copper,linear_foot,5.00,9.50,QXO/Beacon,Premium option,2025-11-01
+METAL,Rake Edge Aluminum,linear_foot,0.50,1.00,QXO/Beacon,Gable end trim,2025-11-01
+METAL,Valley Metal (Open),linear_foot,2.00,4.00,QXO/Beacon,26-gauge steel typical,2025-11-01
+METAL,W-Valley Metal (Closed),linear_foot,2.50,5.00,QXO/Beacon,California-style valley,2025-11-01
+METAL,Step Flashing,each,1.50,3.00,QXO/Beacon,Individual pieces 5x7 or 8x10,2025-11-01
+METAL,Counter Flashing,linear_foot,3.00,6.00,QXO/Beacon,Chimney/wall flashing,2025-11-01
+FASTENERS,Roofing Nails (1-1/4"),per_pound,2.50,4.00,QXO/Beacon,Electro-galvanized coil nails,2025-11-01
+FASTENERS,Roofing Nails (1-1/2"),per_pound,2.50,4.00,QXO/Beacon,For thicker shingles,2025-11-01
+FASTENERS,Cap Nails (Plastic),per_box_250,8.00,15.00,QXO/Beacon,For underlayment,2025-11-01
+FASTENERS,Roofing Screws,per_pound,3.50,5.50,QXO/Beacon,For metal applications,2025-11-01
+VENTILATION,Ridge Vent (Shingle-over),linear_foot,2.50,5.00,QXO/Beacon,Continuous ridge vent,2025-11-01VENTILATION,Box Vent (Broan style),each,15.00,35.00,QXO/Beacon,Static roof vent 50-60 sq in,2025-11-01
+VENTILATION,Turbine Vent,each,25.00,60.00,QXO/Beacon,Wind-powered ventilation,2025-11-01
+VENTILATION,Power Attic Vent,each,150.00,350.00,QXO/Beacon,Electric thermostat-controlled,2025-11-01
+VENTILATION,Soffit Vent (Continuous),linear_foot,1.50,3.50,QXO/Beacon,Aluminum perforated,2025-11-01
+PIPE_JACKS,Pipe Jack 1-inch,each,8.00,15.00,QXO/Beacon,Galvanized or aluminum base,2025-11-01
+PIPE_JACKS,Pipe Jack 2-3 inch,each,10.00,18.00,QXO/Beacon,Standard plumbing vent size,2025-11-01
+PIPE_JACKS,Pipe Jack 3-4 inch,each,12.00,22.00,QXO/Beacon,Larger diameter stack,2025-11-01
+PIPE_JACKS,Pipe Jack 4-inch+,each,15.00,28.00,QXO/Beacon,Large stack applications,2025-11-01
+PIPE_JACKS,Split Boot (Retrofit),each,8.00,18.00,QXO/Beacon,Rubber retrofit boot,2025-11-01
+PIPE_JACKS,Universal Pipe Boot,each,12.00,25.00,QXO/Beacon,Adjustable multi-size,2025-11-01
+SEALANTS,Roofing Cement (Plastic),per_gallon,15.00,30.00,QXO/Beacon,Black asphalt-based,2025-11-01
+SEALANTS,Roofing Cement (Fiber),per_gallon,18.00,35.00,QXO/Beacon,Reinforced with fibers,2025-11-01
+SEALANTS,Roof Caulk Tubes,per_tube,4.00,8.00,QXO/Beacon,Polyurethane or silicone,2025-11-01
+SEALANTS,Lap Sealant,per_tube,5.00,10.00,QXO/Beacon,Metal seam sealing,2025-11-01
+RIDGE_CAP,Hip & Ridge Shingles,linear_foot,3.00,6.00,QXO/Beacon,Pre-formed ridge cap,2025-11-01
+RIDGE_CAP,Starter Strip Shingles,linear_foot,1.50,3.00,QXO/Beacon,Eave and rake starter,2025-11-01
+ACCESSORIES,Roof Deck Protection,per_square,25.00,50.00,QXO/Beacon,Breathable membrane upgrade,2025-11-01
+ACCESSORIES,Snow Guards,each,8.00,25.00,QXO/Beacon,Metal or plastic,2025-11-01
+ACCESSORIES,Gutter Apron,linear_foot,1.00,2.50,QXO/Beacon,Directs water into gutter,2025-11-01
+ACCESSORIES,Chimney Cricket,each,150.00,400.00,QXO/Beacon,Custom fabricated saddle,2025-11-01
+DISPOSAL,Dumpster 20-yard,per_rental,350.00,600.00,Local,Typical residential tear-off,2025-11-01
+DISPOSAL,Dumpster 30-yard,per_rental,450.00,750.00,Local,Large projects,2025-11-01
+DISPOSAL,Debris Haul-away,per_square,20.00,40.00,Local,Alternative to dumpster,2025-11-01
+DECKING,Plywood 1/2-inch CDX,per_sheet,35.00,55.00,QXO/Beacon,4x8 sheet structural,2025-11-01
+DECKING,OSB 7/16-inch,per_sheet,25.00,40.00,QXO/Beacon,Economy sheathing,2025-11-01
+DECKING,Plywood 5/8-inch CDX,per_sheet,45.00,70.00,QXO/Beacon,Heavy-duty applications,2025-11-01
+LUMBER,2x4 Lumber (8ft),each,6.00,12.00,Local,General framing repairs,2025-11-01
+LUMBER,2x6 Lumber (8ft),each,10.00,18.00,Local,Structural repairs,2025-11-01
