@@ -1,0 +1,117 @@
+{
+  "categories": {
+    "SHINGLES": {
+      "label": "Shingles",
+      "items": [
+        {
+          "id": "shingles_3tab",
+          "name": "3-Tab Asphalt (25yr)",
+          "pricePerSquare": { "low": 80, "high": 130, "avg": 105 },
+          "supplier": "QXO/Beacon",
+          "notes": "Basic economy option"
+        },
+        {
+          "id": "shingles_architectural",
+          "name": "Architectural (30yr)",
+          "pricePerSquare": { "low": 100, "high": 180, "avg": 140 },
+          "supplier": "QXO/Beacon",
+          "notes": "Standard dimensional shingles"
+        },
+        {
+          "id": "shingles_architectural_premium",
+          "name": "Architectural Premium (50yr)",
+          "pricePerSquare": { "low": 180, "high": 250, "avg": 215 },
+          "supplier": "QXO/Beacon",
+          "notes": "High-end dimensional with algae resistance"
+        },
+        {
+          "id": "shingles_designer",
+          "name": "Designer/Luxury",
+          "pricePerSquare": { "low": 250, "high": 400, "avg": 325 },
+          "supplier": "QXO/Beacon",
+          "notes": "Premium appearance mimics slate/shake"
+        },
+        {
+          "id": "shingles_gaf_timberline",
+          "name": "GAF Timberline HD",
+          "pricePerSquare": { "low": 110, "high": 165, "avg": 137 },
+          "supplier": "QXO/Beacon",
+          "notes": "Popular mid-range architectural"
+        },
+        {
+          "id": "shingles_owens_duration",
+          "name": "Owens Corning Duration",
+          "pricePerSquare": { "low": 115, "high": 170, "avg": 142 },
+          "supplier": "QXO/Beacon",
+          "notes": "Popular mid-range architectural"
+        },
+        {
+          "id": "shingles_certainteed_landmark",
+          "name": "CertainTeed Landmark",
+          "pricePerSquare": { "low": 110, "high": 165, "avg": 137 },
+          "supplier": "QXO/Beacon",
+          "notes": "Popular mid-range architectural"
+        }
+      ]
+    },
+    "UNDERLAYMENT": {
+      "label": "Underlayment",
+      "items": [
+        {
+          "id": "underlayment_15felt",
+          "name": "#15 Felt Paper",
+          "pricePerSquare": { "low": 10, "high": 20, "avg": 15 },
+          "supplier": "QXO/Beacon",
+          "notes": "Basic asphalt-saturated felt"
+        },
+        {
+          "id": "underlayment_30felt",
+          "name": "#30 Felt Paper",
+          "pricePerSquare": { "low": 15, "high": 30, "avg": 22 },
+          "supplier": "QXO/Beacon",
+          "notes": "Heavier duty felt"
+        },
+        {
+          "id": "underlayment_synthetic",
+          "name": "Synthetic (Standard)",
+          "pricePerSquare": { "low": 40, "high": 80, "avg": 60 },
+          "supplier": "QXO/Beacon",
+          "notes": "Water-resistant synthetic"
+        },
+        {
+          "id": "underlayment_synthetic_premium",
+          "name": "Synthetic Premium",
+          "pricePerSquare": { "low": 80, "high": 120, "avg": 100 },
+          "supplier": "QXO/Beacon",
+          "notes": "High-performance synthetic like OC Pro Armor"
+        }
+      ]
+    }
+  },
+  "materials": [
+    {
+      "id": "ice_water_shield",
+      "name": "Ice & Water Shield",
+      "unit": "linear_foot",
+      "priceRange": { "low": 1.50, "high": 4.00, "avg": 2.75 }
+    },
+    {
+      "id": "drip_edge",
+      "name": "Drip Edge (Aluminum)",
+      "unit": "linear_foot",
+      "priceRange": { "low": 0.50, "high": 1.00, "avg": 0.75 }
+    },
+    {
+      "id": "ridge_vent",
+      "name": "Ridge Vent",
+      "unit": "linear_foot",
+      "priceRange": { "low": 2.50, "high": 5.00, "avg": 3.75 }
+    },
+    {
+      "id": "disposal",
+      "name": "Debris Disposal",
+      "unit": "per_square",
+      "priceRange": { "low": 20.00, "high": 40.00, "avg": 30.00 }
+    }
+  ]
+}

@@ -13,6 +13,7 @@ import {
   Sun,
   Zap
 } from 'lucide-react';
+import materialsData from './materialsData.json';
 
 const RoofingCalculator = () => {
   // --- State Management ---
@@ -22,6 +23,10 @@ const RoofingCalculator = () => {
   const [steepSurcharge, setSteepSurcharge] = useState(100); // $ added per square for steep roofs
   const [wasteFactor, setWasteFactor] = useState(10); // %
 
+  // --- Material Selection ---
+  const [selectedShingle, setSelectedShingle] = useState('shingles_owens_duration');
+  const [selectedUnderlayment, setSelectedUnderlayment] = useState('underlayment_synthetic');
+
   // --- Solar State ---
   const [hasSolar, setHasSolar] = useState(false);
   const [solarPanelCount, setSolarPanelCount] = useState(16);
@@ -29,9 +34,37 @@ const RoofingCalculator = () => {
   const [needsElecUpgrade, setNeedsElecUpgrade] = useState(false);
   const [elecUpgradeCost, setElecUpgradeCost] = useState(1200);
 
-  // --- Pitch Multiplier Calculation ---
+  // --- Helper Functions ---
   const getPitchMultiplier = (pitchValue) => {
     return Math.sqrt(pitchValue * pitchValue + 144) / 12;
+  };
+
+  const getShinglePrice = (shingleId) => {
+    for (const item of materialsData.categories.SHINGLES.items) {
+      if (item.id === shingleId) return item.pricePerSquare.avg;
+    }
+    return 0;
+  };
+
+  const getUnderlaymentPrice = (underlaymentId) => {
+    for (const item of materialsData.categories.UNDERLAYMENT.items) {
+      if (item.id === underlaymentId) return item.pricePerSquare.avg;
+    }
+    return 0;
+  };
+
+  const getShingleName = (shingleId) => {
+    for (const item of materialsData.categories.SHINGLES.items) {
+      if (item.id === shingleId) return item.name;
+    }
+    return 'Unknown';
+  };
+
+  const getUnderlaymentName = (underlaymentId) => {
+    for (const item of materialsData.categories.UNDERLAYMENT.items) {
+      if (item.id === underlaymentId) return item.name;
+    }
+    return 'Unknown';
   };
 
   // --- Calculations ---
@@ -52,11 +85,15 @@ const RoofingCalculator = () => {
       activeSurcharge = steepSurcharge;
     }
 
+    // Material Costs (informational only - not added to customer price)
+    const shinglePrice = getShinglePrice(selectedShingle);
+    const underlaymentPrice = getUnderlaymentPrice(selectedUnderlayment);
+
     const baseMaterialCost = squares * basePricePerSq;
     const pitchCostTotal = squares * activeSurcharge;
 
-    // Waste Calculation - based on roof squares & base price per square (material waste)
-    const wasteCost = squares * basePricePerSq * (wasteFactor / 100);
+    // Waste Calculation - based on quoted price (base + pitch surcharge)
+    const wasteCost = (baseMaterialCost + pitchCostTotal) * (wasteFactor / 100);
 
     // Solar Calculations
     let solarTotal = 0;
@@ -67,7 +104,7 @@ const RoofingCalculator = () => {
         }
     }
 
-    // Subtotal: base material + pitch surcharge + waste
+    // Subtotal: base + pitch surcharge + waste (materials are not customer charges)
     const subtotal = baseMaterialCost + pitchCostTotal + wasteCost;
 
     const totalCost = subtotal + solarTotal;
@@ -79,6 +116,8 @@ const RoofingCalculator = () => {
       actualRoofArea,
       pitchCategory,
       activeSurcharge,
+      shinglePrice,
+      underlaymentPrice,
       baseMaterialCost,
       pitchCostTotal,
       wasteCost,
@@ -86,7 +125,7 @@ const RoofingCalculator = () => {
       totalCost,
       finalPricePerSq
     };
-  }, [homeFootprintArea, basePricePerSq, pitch, steepSurcharge, wasteFactor, hasSolar, solarPanelCount, solarRrPrice, needsElecUpgrade, elecUpgradeCost]);
+  }, [homeFootprintArea, basePricePerSq, pitch, steepSurcharge, wasteFactor, hasSolar, solarPanelCount, solarRrPrice, needsElecUpgrade, elecUpgradeCost, selectedShingle, selectedUnderlayment]);
 
   // --- Formatters ---
   const fmtCurrency = (val) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(val);
@@ -273,6 +312,61 @@ const RoofingCalculator = () => {
                     onChange={(e) => setWasteFactor(Number(e.target.value))}
                     className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-slate-400 hover:accent-slate-300 transition-all"
                   />
+                </div>
+
+                {/* Materials Selection */}
+                <div className="border-t border-slate-700 pt-8 space-y-6">
+                  <div className="text-xs font-semibold text-slate-400 uppercase tracking-widest">Material Selection</div>
+
+                  {/* Shingle Selection */}
+                  <div>
+                    <label className="text-sm font-medium text-slate-300 mb-2 block">Roofing Shingles</label>
+                    <select
+                      value={selectedShingle}
+                      onChange={(e) => setSelectedShingle(e.target.value)}
+                      className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-sm text-slate-100 focus:outline-none focus:border-blue-500 hover:border-slate-600 transition-colors"
+                    >
+                      {materialsData.categories.SHINGLES.items.map((shingle) => (
+                        <option key={shingle.id} value={shingle.id}>
+                          {shingle.name} - {fmtCurrency(shingle.pricePerSquare.avg)}/sq
+                        </option>
+                      ))}
+                    </select>
+                    <p className="text-xs text-slate-500 mt-2">{getShingleName(selectedShingle)}</p>
+                  </div>
+
+                  {/* Underlayment Selection */}
+                  <div>
+                    <label className="text-sm font-medium text-slate-300 mb-2 block">Underlayment</label>
+                    <select
+                      value={selectedUnderlayment}
+                      onChange={(e) => setSelectedUnderlayment(e.target.value)}
+                      className="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-sm text-slate-100 focus:outline-none focus:border-blue-500 hover:border-slate-600 transition-colors"
+                    >
+                      {materialsData.categories.UNDERLAYMENT.items.map((underlayment) => (
+                        <option key={underlayment.id} value={underlayment.id}>
+                          {underlayment.name} - {fmtCurrency(underlayment.pricePerSquare.avg)}/sq
+                        </option>
+                      ))}
+                    </select>
+                    <p className="text-xs text-slate-500 mt-2">{getUnderlaymentName(selectedUnderlayment)}</p>
+                  </div>
+
+                  {/* Material Cost Breakdown */}
+                  <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700/50 space-y-3">
+                    <div className="flex justify-between items-center text-sm">
+                      <span className="text-slate-300">Shingles</span>
+                      <span className="font-mono text-blue-400">{fmtCurrency(calculations.shinglePrice)}/sq</span>
+                    </div>
+                    <div className="flex justify-between items-center text-sm">
+                      <span className="text-slate-300">Underlayment</span>
+                      <span className="font-mono text-blue-400">{fmtCurrency(calculations.underlaymentPrice)}/sq</span>
+                    </div>
+                    <div className="border-t border-slate-700 pt-3 flex justify-between items-center text-sm font-semibold">
+                      <span className="text-slate-200">Material Cost / Sq</span>
+                      <span className="font-mono text-emerald-400">{fmtCurrency(calculations.shinglePrice + calculations.underlaymentPrice)}/sq</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
