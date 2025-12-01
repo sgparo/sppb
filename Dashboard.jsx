@@ -197,12 +197,15 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
 
   // Save record
   const handleSave = () => {
+    let updatedLeads = leads;
+    let updatedProjects = projects;
+    let updatedQuotes = quotes;
+
     if (modalType === 'lead') {
       if (!formData.Customer_Name || !formData.Email) {
         alert('Please fill in required fields');
         return;
       }
-      let updatedLeads;
       if (editingId) {
         const originalLead = leads.find(l => l.Lead_ID === editingId) || {};
         updatedLeads = leads.map(l => l.Lead_ID === editingId ? { ...originalLead, ...formData, Lead_ID: editingId } : l);
@@ -222,7 +225,6 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
         alert('Please fill in required fields');
         return;
       }
-      let updatedProjects;
       if (editingId) {
         const originalProject = projects.find(p => p.Project_ID === editingId) || {};
         updatedProjects = projects.map(p => p.Project_ID === editingId ? { ...originalProject, ...formData, Project_ID: editingId } : p);
@@ -240,7 +242,6 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
         alert('Please fill in required fields');
         return;
       }
-      let updatedQuotes;
       if (editingId) {
         const originalQuote = quotes.find(q => q.Quote_ID === editingId) || {};
         updatedQuotes = quotes.map(q => q.Quote_ID === editingId ? { ...originalQuote, ...formData, Quote_ID: editingId } : q);
@@ -255,7 +256,7 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
       setQuotes(updatedQuotes);
       saveQuotes(updatedQuotes);
     }
-    setMetrics(calculateMetrics(quotes, projects));
+    setMetrics(calculateMetrics(updatedQuotes, updatedProjects));
     setShowAddModal(false);
     setFormData({});
   };
