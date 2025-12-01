@@ -88,6 +88,32 @@ const Dashboard = () => {
     setShowAddModal(true);
   };
 
+  // Create project from lead
+  const createProjectFromLead = (lead) => {
+    setModalType('project');
+    setEditingId(null);
+    setFormData({
+      Lead_ID: lead.Lead_ID,
+      Customer_Name: lead.Customer_Name,
+      Project_Address: `${lead.Address}, ${lead.City}, ${lead.State} ${lead.Zip}`,
+      Status: 'SCHEDULED',
+    });
+    setShowAddModal(true);
+  };
+
+  // Create quote from lead
+  const createQuoteFromLead = (lead) => {
+    setModalType('quote');
+    setEditingId(null);
+    setFormData({
+      Lead_ID: lead.Lead_ID,
+      Customer_Name: lead.Customer_Name,
+      Roof_Area_Squares: lead.Squares_Est,
+      Status: 'PENDING',
+    });
+    setShowAddModal(true);
+  };
+
   // Save record
   const handleSave = () => {
     if (modalType === 'lead') {
@@ -362,7 +388,21 @@ const Dashboard = () => {
                         </td>
                         <td className="px-6 py-4 text-slate-300 font-mono">{lead.Squares_Est}</td>
                         <td className="px-6 py-4">
-                          <div className="flex gap-2">
+                          <div className="flex gap-2 flex-wrap">
+                            <button
+                              onClick={() => createProjectFromLead(lead)}
+                              className="text-xs px-2 py-1 bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-300 rounded transition-colors"
+                              title="Create project from this lead"
+                            >
+                              + Project
+                            </button>
+                            <button
+                              onClick={() => createQuoteFromLead(lead)}
+                              className="text-xs px-2 py-1 bg-amber-600/30 hover:bg-amber-600/50 text-amber-300 rounded transition-colors"
+                              title="Create quote from this lead"
+                            >
+                              + Quote
+                            </button>
                             <button
                               onClick={() => openEditModal('lead', lead)}
                               className="text-blue-400 hover:text-blue-300"
