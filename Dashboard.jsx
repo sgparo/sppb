@@ -204,7 +204,8 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
       }
       let updatedLeads;
       if (editingId) {
-        updatedLeads = leads.map(l => l.Lead_ID === editingId ? { ...formData, Lead_ID: editingId } : l);
+        const originalLead = leads.find(l => l.Lead_ID === editingId) || {};
+        updatedLeads = leads.map(l => l.Lead_ID === editingId ? { ...originalLead, ...formData, Lead_ID: editingId } : l);
       } else {
         const newLead = {
           ...formData,
@@ -223,7 +224,8 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
       }
       let updatedProjects;
       if (editingId) {
-        updatedProjects = projects.map(p => p.Project_ID === editingId ? { ...formData, Project_ID: editingId } : p);
+        const originalProject = projects.find(p => p.Project_ID === editingId) || {};
+        updatedProjects = projects.map(p => p.Project_ID === editingId ? { ...originalProject, ...formData, Project_ID: editingId } : p);
       } else {
         const newProject = {
           ...formData,
@@ -240,7 +242,8 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
       }
       let updatedQuotes;
       if (editingId) {
-        updatedQuotes = quotes.map(q => q.Quote_ID === editingId ? { ...formData, Quote_ID: editingId } : q);
+        const originalQuote = quotes.find(q => q.Quote_ID === editingId) || {};
+        updatedQuotes = quotes.map(q => q.Quote_ID === editingId ? { ...originalQuote, ...formData, Quote_ID: editingId } : q);
       } else {
         const newQuote = {
           ...formData,
@@ -254,6 +257,7 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
     }
     setMetrics(calculateMetrics(quotes, projects));
     setShowAddModal(false);
+    setFormData({});
   };
 
   // Delete record
