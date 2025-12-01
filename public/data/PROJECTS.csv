@@ -1,2 +1,1 @@
 Project_ID,Lead_ID,Customer_Name,Project_Address,Status,Date_Sold,Sale_Amount,Deposit_Amount,Deposit_Date,Scheduled_Start,Scheduled_Complete,Actual_Start,Actual_Complete,Crew_Assigned,Project_Manager,Invoice_Sent,Final_Payment,Notes
-PROJ_001,LEAD_001,Sample Customer,123 Main St Westminster CO 80021,SCHEDULED,2025-11-01,12500.00,2500.00,2025-11-02,2025-11-10,2025-11-11,,,,PM1,FALSE,0.00,Waiting for material delivery

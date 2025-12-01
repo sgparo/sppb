@@ -1,2 +1,1 @@
 Lead_ID,Date_Entered,Customer_Name,Address,City,State,Zip,Phone,Email,Lead_Source,Status,Roof_Type,Roof_Pitch,Squares_Est,Notes,Assigned_To,Follow_Up_Date
-LEAD_001,2025-11-01,Sample Customer,123 Main St,Westminster,CO,80021,303-555-0100,customer@email.com,Referral,NEW,Asphalt_Shingle,6/12,25,Interested in upgrade to architectural,Rep1,2025-11-03
