@@ -585,7 +585,39 @@ const RoofingCalculator = ({ quoteFromLead, onSaveQuote }) => {
                             </div>
                         </div>
 
-                        <button className="w-full mt-6 bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 group-hover:shadow-lg group-hover:shadow-blue-500/20">
+                        <button
+                          onClick={() => {
+                            if (onSaveQuote) {
+                              const quoteData = {
+                                Quote_ID: `QUOTE_${String(Math.random().toString(36).substr(2, 9)).toUpperCase()}`,
+                                Lead_ID: quoteFromLead?.Lead_ID || '',
+                                Customer_Name: quoteFromLead?.Customer_Name || 'New Quote',
+                                Date_Generated: new Date().toISOString().split('T')[0],
+                                Valid_Until: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                                Status: 'PENDING',
+                                Roof_Area_SF: calculations.actualRoofArea.toFixed(0),
+                                Roof_Area_Squares: calculations.squares.toFixed(2),
+                                Material_Type: 'Asphalt Shingle',
+                                Material_Grade: getShingleName(selectedShingle),
+                                Labor_Rate_Per_Sq: basePricePerSq,
+                                Material_Cost: (calculations.shinglePrice + calculations.underlaymentPrice) * calculations.squares,
+                                Labor_Cost: calculations.baseMaterialCost,
+                                Disposal_Cost: 0,
+                                Permit_Cost: 0,
+                                Other_Costs: calculations.pitchCostTotal,
+                                Subtotal: calculations.totalCost - calculations.solarTotal,
+                                Profit_Margin_Percent: '35',
+                                Total_Quote: calculations.totalCost.toFixed(2),
+                                Deposit_Required: (calculations.totalCost * 0.2).toFixed(2),
+                                Notes: 'Quote created from estimator',
+                              };
+                              onSaveQuote(quoteData);
+                            } else {
+                              alert('Save functionality not available');
+                            }
+                          }}
+                          className="w-full mt-6 bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 group-hover:shadow-lg group-hover:shadow-blue-500/20"
+                        >
                             Save Estimate <ChevronRight className="w-4 h-4" />
                         </button>
                     </div>
