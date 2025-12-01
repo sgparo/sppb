@@ -1,7 +1,9 @@
-import React from 'react';
-import { X } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { X, ChevronDown, ChevronUp } from 'lucide-react';
+import scopeItemsData from './scopeItems.json';
 
 const FormModal = ({ modalType, editingId, formData, onFormDataChange, onSave, onCancel }) => {
+  const [expandedCategory, setExpandedCategory] = useState(null);
   const getFields = () => {
     if (modalType === 'lead') {
       return [
@@ -59,9 +61,33 @@ const FormModal = ({ modalType, editingId, formData, onFormDataChange, onSave, o
 
   const fields = getFields();
 
+  // Get scope items grouped by category
+  const scopeItemsByCategory = useMemo(() => {
+    const grouped = {};
+    scopeItemsData.scopeItems.forEach(item => {
+      if (!grouped[item.category]) {
+        grouped[item.category] = [];
+      }
+      grouped[item.category].push(item);
+    });
+    return grouped;
+  }, []);
+
+  // Handle scope item selection
+  const selectedScopes = useMemo(() => {
+    return formData.Scope_Items ? (typeof formData.Scope_Items === 'string' ? JSON.parse(formData.Scope_Items) : formData.Scope_Items) : [];
+  }, [formData.Scope_Items]);
+
+  const toggleScopeItem = (itemId) => {
+    const updated = selectedScopes.includes(itemId)
+      ? selectedScopes.filter(id => id !== itemId)
+      : [...selectedScopes, itemId];
+    onFormDataChange({ ...formData, Scope_Items: updated });
+  };
+
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-slate-900 border border-slate-800 rounded-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-slate-900 border border-slate-800 rounded-lg p-6 max-w-3xl w-full max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">
             {editingId ? 'Edit' : 'Add'} {modalType?.charAt(0).toUpperCase() + modalType?.slice(1)}
@@ -107,6 +133,48 @@ const FormModal = ({ modalType, editingId, formData, onFormDataChange, onSave, o
             </div>
           ))}
         </div>
+
+        {/* Scope Items for Quotes */}
+        {modalType === 'quote' && (
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold text-slate-200 mb-4">Scope of Work</h3>
+            <div className="space-y-2">
+              {Object.entries(scopeItemsByCategory).map(([category, items]) => (
+                <div key={category} className="bg-slate-800/50 rounded-lg border border-slate-700 overflow-hidden">
+                  <button
+                    onClick={() => setExpandedCategory(expandedCategory === category ? null : category)}
+                    className="w-full px-4 py-3 flex items-center justify-between hover:bg-slate-800 transition-colors"
+                  >
+                    <span className="font-medium text-slate-300">{category}</span>
+                    {expandedCategory === category ? (
+                      <ChevronUp className="w-4 h-4" />
+                    ) : (
+                      <ChevronDown className="w-4 h-4" />
+                    )}
+                  </button>
+                  {expandedCategory === category && (
+                    <div className="px-4 py-3 bg-slate-900/50 border-t border-slate-700 space-y-2">
+                      {items.map(item => (
+                        <label key={item.id} className="flex items-start gap-3 cursor-pointer group">
+                          <input
+                            type="checkbox"
+                            checked={selectedScopes.includes(item.id)}
+                            onChange={() => toggleScopeItem(item.id)}
+                            className="mt-1 w-4 h-4 rounded border-slate-600 bg-slate-800 cursor-pointer"
+                          />
+                          <div>
+                            <p className="text-sm font-medium text-slate-200 group-hover:text-white">{item.name}</p>
+                            <p className="text-xs text-slate-400">{item.description}</p>
+                          </div>
+                        </label>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="flex gap-3 justify-end">
           <button

@@ -1,0 +1,142 @@
+{
+  "scopeItems": [
+    {
+      "id": "inspection",
+      "category": "Pre-Construction",
+      "name": "Roof Inspection & Assessment",
+      "description": "Complete roof deck inspection for damage, deterioration, and structural integrity"
+    },
+    {
+      "id": "permits",
+      "category": "Pre-Construction",
+      "name": "Building Permits & Inspections",
+      "description": "Obtain all required building permits and coordinate with local authorities"
+    },
+    {
+      "id": "tearoff",
+      "category": "Demolition",
+      "name": "Complete Tear-Off",
+      "description": "Full tear-off of existing roofing system down to deck, removal of shingles, underlayment, and old flashing"
+    },
+    {
+      "id": "deck-inspection",
+      "category": "Deck Preparation",
+      "name": "Deck Inspection & Assessment",
+      "description": "Inspection of exposed roof deck after tear-off"
+    },
+    {
+      "id": "renail",
+      "category": "Deck Preparation",
+      "name": "Re-Nail Roof Deck",
+      "description": "Re-nailing of loose or inadequate fasteners to code specifications (12 inch on center)"
+    },
+    {
+      "id": "deck-repair",
+      "category": "Deck Preparation",
+      "name": "Decking Replacement",
+      "description": "Replacement of damaged, rotted, or deteriorated roof deck boards/sheathing"
+    },
+    {
+      "id": "ice-water-shield",
+      "category": "Water Protection",
+      "name": "Ice & Water Shield Installation",
+      "description": "Installation along eaves, valleys, and all penetrations per manufacturer specifications"
+    },
+    {
+      "id": "underlayment",
+      "category": "Water Protection",
+      "name": "Underlayment Installation",
+      "description": "Installation of specified underlayment type with proper overlap and fastening"
+    },
+    {
+      "id": "drip-edge",
+      "category": "Edge Protection",
+      "name": "Drip Edge Installation",
+      "description": "Installation of drip edge along all eaves and rakes, mechanically fastened per code"
+    },
+    {
+      "id": "valley-flashing",
+      "category": "Flashing",
+      "name": "Valley Flashing",
+      "description": "Metal valley flashing installation to manage water flow"
+    },
+    {
+      "id": "step-flashing",
+      "category": "Flashing",
+      "name": "Step Flashing at Walls",
+      "description": "Step flashing installation at all roof-wall intersections"
+    },
+    {
+      "id": "chimney-flashing",
+      "category": "Flashing",
+      "name": "Chimney Flashing",
+      "description": "Chimney base, step, and counter flashing installation"
+    },
+    {
+      "id": "vent-flashing",
+      "category": "Flashing",
+      "name": "Pipe Boot & Vent Flashing",
+      "description": "Installation or replacement of roof pipe boots and vent flashing"
+    },
+    {
+      "id": "shingle-install",
+      "category": "Roofing Installation",
+      "name": "Shingle Installation",
+      "description": "Installation of specified brand and color shingles with proper nailing per manufacturer specs"
+    },
+    {
+      "id": "ridge-vent",
+      "category": "Ventilation",
+      "name": "Ridge Vent Installation",
+      "description": "Ridge vent installation for proper attic ventilation and code compliance"
+    },
+    {
+      "id": "skylights",
+      "category": "Penetrations",
+      "name": "Skylight Installation/Flashing",
+      "description": "Skylight reflashing or new skylight installation with proper integration"
+    },
+    {
+      "id": "roof-vents",
+      "category": "Penetrations",
+      "name": "Roof Vents & Exhaust",
+      "description": "Installation or replacement of roof vents, attic fans, and exhaust flashing"
+    },
+    {
+      "id": "gutters",
+      "category": "Drainage",
+      "name": "Gutter Installation/Replacement",
+      "description": "New gutter installation or removal and reinstallation with downspouts"
+    },
+    {
+      "id": "gutter-guard",
+      "category": "Drainage",
+      "name": "Gutter Guard System",
+      "description": "Gutter protection system to prevent debris accumulation"
+    },
+    {
+      "id": "cleanup",
+      "category": "Site Services",
+      "name": "Complete Cleanup & Debris Removal",
+      "description": "Removal of all roofing debris, magnetic sweep for nails, gutter cleaning"
+    },
+    {
+      "id": "protection",
+      "category": "Site Services",
+      "name": "Property Protection",
+      "description": "Ground protection with tarps and plywood, protection of windows and siding"
+    },
+    {
+      "id": "warranty-workmanship",
+      "category": "Warranty",
+      "name": "Workmanship Warranty",
+      "description": "Contractor workmanship warranty coverage for installation quality"
+    },
+    {
+      "id": "warranty-manufacturer",
+      "category": "Warranty",
+      "name": "Manufacturer Material Warranty",
+      "description": "Full manufacturer warranty coverage for roofing materials and components"
+    }
+  ]
+}

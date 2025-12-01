@@ -34,6 +34,23 @@ const RoofingCalculator = ({ quoteFromLead, onSaveQuote }) => {
   const [needsElecUpgrade, setNeedsElecUpgrade] = useState(false);
   const [elecUpgradeCost, setElecUpgradeCost] = useState(1200);
 
+  // --- Scope Items State (Default standard roof replacement items) ---
+  const defaultScopeItems = [
+    'inspection',
+    'tearoff',
+    'deck-inspection',
+    'renail',
+    'ice-water-shield',
+    'underlayment',
+    'drip-edge',
+    'valley-flashing',
+    'step-flashing',
+    'vent-flashing',
+    'shingle-install',
+    'ridge-vent',
+    'cleanup'
+  ];
+
   // --- Pre-fill from lead data ---
   useEffect(() => {
     if (quoteFromLead && quoteFromLead.Roof_Area_Squares) {
@@ -193,6 +210,7 @@ const RoofingCalculator = ({ quoteFromLead, onSaveQuote }) => {
                     Total_Quote: calculations.totalCost.toFixed(2),
                     Deposit_Required: (calculations.totalCost * 0.2).toFixed(2),
                     Notes: 'Quote created from estimator',
+                    Scope_Items: defaultScopeItems,
                   };
                   onSaveQuote(quoteData);
                 }
@@ -610,6 +628,7 @@ const RoofingCalculator = ({ quoteFromLead, onSaveQuote }) => {
                                 Total_Quote: calculations.totalCost.toFixed(2),
                                 Deposit_Required: (calculations.totalCost * 0.2).toFixed(2),
                                 Notes: 'Quote created from estimator',
+                                Scope_Items: defaultScopeItems,
                               };
                               onSaveQuote(quoteData);
                             } else {

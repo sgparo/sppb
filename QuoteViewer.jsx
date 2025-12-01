@@ -1,5 +1,6 @@
-import React from 'react';
-import { X, Mail, Download } from 'lucide-react';
+import React, { useMemo } from 'react';
+import { X, Mail, Download, CheckCircle2 } from 'lucide-react';
+import scopeItemsData from './scopeItems.json';
 
 const QuoteViewer = ({ quote, onClose }) => {
   const fmtCurrency = (val) => {
@@ -19,6 +20,32 @@ const QuoteViewer = ({ quote, onClose }) => {
       return dateStr;
     }
   };
+
+  // Get selected scope items
+  const selectedScopeIds = useMemo(() => {
+    if (!quote.Scope_Items) return [];
+    if (typeof quote.Scope_Items === 'string') {
+      try {
+        return JSON.parse(quote.Scope_Items);
+      } catch {
+        return [];
+      }
+    }
+    return Array.isArray(quote.Scope_Items) ? quote.Scope_Items : [];
+  }, [quote.Scope_Items]);
+
+  const selectedScopeItems = useMemo(() => {
+    return selectedScopeIds
+      .map(id => scopeItemsData.scopeItems.find(item => item.id === id))
+      .filter(Boolean)
+      .reduce((acc, item) => {
+        if (!acc[item.category]) {
+          acc[item.category] = [];
+        }
+        acc[item.category].push(item);
+        return acc;
+      }, {});
+  }, [selectedScopeIds]);
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
@@ -98,6 +125,28 @@ const QuoteViewer = ({ quote, onClose }) => {
                 </div>
               </div>
             </div>
+
+            {/* Scope of Work */}
+            {Object.keys(selectedScopeItems).length > 0 && (
+              <div className="mb-8 pb-6 border-b border-slate-300">
+                <h3 className="text-lg font-bold mb-4">Scope of Work</h3>
+                <div className="space-y-4">
+                  {Object.entries(selectedScopeItems).map(([category, items]) => (
+                    <div key={category}>
+                      <p className="font-semibold text-slate-700 mb-2">{category}</p>
+                      <ul className="space-y-1 ml-4">
+                        {items.map(item => (
+                          <li key={item.id} className="flex gap-2 text-sm text-slate-700">
+                            <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
+                            <span>{item.name}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Notes */}
             {quote.Notes && (
