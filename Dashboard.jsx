@@ -14,11 +14,13 @@ import {
   Plus,
   Trash2,
   Edit2,
-  X
+  X,
+  Eye
 } from 'lucide-react';
 import { loadCSVFile, calculateMetrics } from './csvUtils';
 import { getQuotes, saveQuotes, getLeads, saveLeads, getProjects, saveProjects } from './storageUtils';
 import FormModal from './FormModal';
+import QuoteViewer from './QuoteViewer';
 
 const Dashboard = ({ onCreateQuoteFromLead }) => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -35,6 +37,10 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
   const [modalType, setModalType] = useState(null); // 'lead', 'project', 'quote'
   const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState({});
+
+  // Quote viewer state
+  const [selectedQuote, setSelectedQuote] = useState(null);
+  const [showQuoteViewer, setShowQuoteViewer] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
@@ -135,6 +141,12 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
       });
       setShowAddModal(true);
     }
+  };
+
+  // View quote
+  const handleViewQuote = (quote) => {
+    setSelectedQuote(quote);
+    setShowQuoteViewer(true);
   };
 
   // Save record
@@ -632,6 +644,13 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
                         <td className="px-6 py-4">
                           <div className="flex gap-2">
                             <button
+                              onClick={() => handleViewQuote(quote)}
+                              className="text-emerald-400 hover:text-emerald-300"
+                              title="View quote"
+                            >
+                              <Eye className="w-4 h-4" />
+                            </button>
+                            <button
                               onClick={() => openEditModal('quote', quote)}
                               className="text-blue-400 hover:text-blue-300"
                             >
@@ -671,6 +690,14 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
           onFormDataChange={setFormData}
           onSave={handleSave}
           onCancel={() => setShowAddModal(false)}
+        />
+      )}
+
+      {/* Quote Viewer */}
+      {showQuoteViewer && selectedQuote && (
+        <QuoteViewer
+          quote={selectedQuote}
+          onClose={() => setShowQuoteViewer(false)}
         />
       )}
     </div>
