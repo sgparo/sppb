@@ -209,7 +209,8 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
         const newLead = {
           ...formData,
           Lead_ID: generateId('LEAD', leads),
-          Date_Entered: new Date().toISOString().split('T')[0]
+          Date_Entered: new Date().toISOString().split('T')[0],
+          Status: 'PENDING'
         };
         updatedLeads = [...leads, newLead];
       }
@@ -431,6 +432,7 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
                 className="bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-500"
               >
                 <option value="ALL">All Status</option>
+                <option value="PENDING">PENDING</option>
                 <option value="NEW">NEW</option>
                 <option value="CONTACTED">CONTACTED</option>
                 <option value="QUOTED">QUOTED</option>
@@ -472,6 +474,7 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
                         </td>
                         <td className="px-6 py-4">
                           <span className={`px-2 py-1 rounded text-xs font-semibold ${
+                            lead.Status === 'PENDING' ? 'bg-yellow-500/20 text-yellow-400' :
                             lead.Status === 'NEW' ? 'bg-green-500/20 text-green-400' :
                             lead.Status === 'CONTACTED' ? 'bg-blue-500/20 text-blue-400' :
                             'bg-slate-700 text-slate-300'

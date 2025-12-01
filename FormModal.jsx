@@ -15,7 +15,7 @@ const FormModal = ({ modalType, editingId, formData, onFormDataChange, onSave, o
         { label: 'Phone', key: 'Phone' },
         { label: 'Email', key: 'Email', required: true },
         { label: 'Lead Source', key: 'Lead_Source' },
-        { label: 'Status', key: 'Status', type: 'select', options: ['NEW', 'CONTACTED', 'QUOTED'] },
+        { label: 'Status', key: 'Status', type: 'select', options: ['PENDING', 'NEW', 'CONTACTED', 'QUOTED'] },
         { label: 'Roof Type', key: 'Roof_Type' },
         { label: 'Roof Pitch', key: 'Roof_Pitch' },
         { label: 'Estimated Squares', key: 'Squares_Est' },
