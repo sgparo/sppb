@@ -102,7 +102,9 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
   // Open edit modal
   const openEditModal = (type, item) => {
     setModalType(type);
-    setEditingId(item[Object.keys(item)[0]]);
+    // Get the correct ID field based on type
+    const idField = type === 'lead' ? 'Lead_ID' : type === 'project' ? 'Project_ID' : 'Quote_ID';
+    setEditingId(item[idField]);
     setFormData({ ...item });
     setShowAddModal(true);
   };
