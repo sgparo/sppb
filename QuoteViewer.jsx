@@ -85,68 +85,17 @@ const QuoteViewer = ({ quote, onClose }) => {
               </div>
             </div>
 
-            {/* Cost Breakdown */}
-            <div className="mb-8 pb-6 border-b border-slate-300">
-              <h3 className="text-lg font-bold mb-4">Cost Breakdown</h3>
-              <div className="space-y-3 text-sm">
-                {quote.Material_Cost && (
-                  <div className="flex justify-between">
-                    <span>Material Cost</span>
-                    <span>{fmtCurrency(quote.Material_Cost)}</span>
-                  </div>
-                )}
-                {quote.Labor_Cost && (
-                  <div className="flex justify-between">
-                    <span>Labor Cost</span>
-                    <span>{fmtCurrency(quote.Labor_Cost)}</span>
-                  </div>
-                )}
-                {quote.Disposal_Cost && parseFloat(quote.Disposal_Cost) > 0 && (
-                  <div className="flex justify-between">
-                    <span>Disposal Cost</span>
-                    <span>{fmtCurrency(quote.Disposal_Cost)}</span>
-                  </div>
-                )}
-                {quote.Permit_Cost && parseFloat(quote.Permit_Cost) > 0 && (
-                  <div className="flex justify-between">
-                    <span>Permit Cost</span>
-                    <span>{fmtCurrency(quote.Permit_Cost)}</span>
-                  </div>
-                )}
-                {quote.Other_Costs && parseFloat(quote.Other_Costs) > 0 && (
-                  <div className="flex justify-between">
-                    <span>Other Costs</span>
-                    <span>{fmtCurrency(quote.Other_Costs)}</span>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Summary */}
-            <div className="mb-8 bg-slate-100 rounded-lg p-6">
-              <div className="space-y-3">
-                {quote.Subtotal && (
-                  <div className="flex justify-between text-sm">
-                    <span>Subtotal</span>
-                    <span>{fmtCurrency(quote.Subtotal)}</span>
-                  </div>
-                )}
-                <div className="flex justify-between font-bold text-lg pt-3 border-t-2 border-slate-300">
-                  <span>Total Quote</span>
+            {/* Price Summary */}
+            <div className="mb-8 bg-emerald-50 rounded-lg p-6 border-2 border-emerald-200">
+              <div className="space-y-4">
+                <div className="flex justify-between font-bold text-xl">
+                  <span>Estimated Project Cost</span>
                   <span className="text-emerald-600">{fmtCurrency(quote.Total_Quote)}</span>
                 </div>
-              </div>
-            </div>
-
-            {/* Deposit and Terms */}
-            <div className="grid grid-cols-2 gap-6 mb-8 text-sm">
-              <div>
-                <p className="text-slate-600 font-semibold">Deposit Required</p>
-                <p className="text-lg font-bold">{fmtCurrency(quote.Deposit_Required)}</p>
-              </div>
-              <div>
-                <p className="text-slate-600 font-semibold">Profit Margin</p>
-                <p className="text-lg font-bold">{quote.Profit_Margin_Percent}%</p>
+                <div className="border-t border-emerald-200 pt-4 flex justify-between text-sm">
+                  <span className="text-slate-700">Deposit Required (20%)</span>
+                  <span className="font-semibold">{fmtCurrency(quote.Deposit_Required)}</span>
+                </div>
               </div>
             </div>
 
