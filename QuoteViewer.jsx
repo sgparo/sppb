@@ -148,6 +148,30 @@ const QuoteViewer = ({ quote, onClose }) => {
               </div>
             )}
 
+            {/* Payment Terms */}
+            <div className="mb-8 pb-6 border-b border-slate-300">
+              <h3 className="text-lg font-bold mb-4">Payment Terms</h3>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center pb-3 border-b border-slate-200">
+                  <span className="text-slate-700">
+                    <span className="font-semibold">50% Deposit Due Upon Agreement</span>
+                    <p className="text-xs text-slate-600 mt-1">Due before work begins</p>
+                  </span>
+                  <span className="text-lg font-bold text-emerald-600">{fmtCurrency(parseFloat(quote.Total_Quote) * 0.5)}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-slate-700">
+                    <span className="font-semibold">50% Due Upon Inspection Approval</span>
+                    <p className="text-xs text-slate-600 mt-1">Due after final inspection passes</p>
+                  </span>
+                  <span className="text-lg font-bold text-emerald-600">{fmtCurrency(parseFloat(quote.Total_Quote) * 0.5)}</span>
+                </div>
+              </div>
+              <p className="text-xs text-slate-600 mt-4 pt-4 border-t border-slate-200">
+                <strong>Payment Methods:</strong> Check, ACH transfer, or credit card (3% processing fee applied)
+              </p>
+            </div>
+
             {/* Notes */}
             {quote.Notes && (
               <div className="mb-6 bg-slate-50 p-4 rounded border border-slate-200">
