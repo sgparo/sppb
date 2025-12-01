@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import RoofingCalculator from './RoofingCalculator';
 import Dashboard from './Dashboard';
 import { Calculator, BarChart3 } from 'lucide-react';
+import { addQuote } from './storageUtils';
 import './index.css';
 
 function App() {
@@ -13,8 +14,14 @@ function App() {
     setActivePage('calculator');
   };
 
-  const handleQuoteSaved = () => {
-    setQuoteFromLead(null);
+  const handleSaveQuote = (quoteData) => {
+    const success = addQuote(quoteData);
+    if (success) {
+      setQuoteFromLead(null);
+      // Optionally switch back to dashboard after saving
+      setActivePage('dashboard');
+    }
+    return success;
   };
 
   return (
@@ -55,7 +62,7 @@ function App() {
       </nav>
 
       {/* Page Content */}
-      {activePage === 'calculator' && <RoofingCalculator quoteFromLead={quoteFromLead} onQuoteSaved={handleQuoteSaved} />}
+      {activePage === 'calculator' && <RoofingCalculator quoteFromLead={quoteFromLead} onSaveQuote={handleSaveQuote} />}
       {activePage === 'dashboard' && <Dashboard onCreateQuoteFromLead={handleCreateQuoteFromLead} />}
     </div>
   );

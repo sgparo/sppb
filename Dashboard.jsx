@@ -17,6 +17,7 @@ import {
   X
 } from 'lucide-react';
 import { loadCSVFile, calculateMetrics } from './csvUtils';
+import { getQuotes, saveQuotes, getLeads, saveLeads, getProjects, saveProjects } from './storageUtils';
 import FormModal from './FormModal';
 
 const Dashboard = ({ onCreateQuoteFromLead }) => {
@@ -38,11 +39,23 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
-      const [leadsData, projectsData, quotesData] = await Promise.all([
-        loadCSVFile('LEADS.csv'),
-        loadCSVFile('PROJECTS.csv'),
-        loadCSVFile('QUOTES.csv'),
-      ]);
+
+      // Try to load from localStorage first, then fall back to CSV files
+      let leadsData = getLeads();
+      let projectsData = getProjects();
+      let quotesData = getQuotes();
+
+      // If localStorage is empty, load from CSV files
+      if (leadsData.length === 0 && projectsData.length === 0 && quotesData.length === 0) {
+        const [csvLeads, csvProjects, csvQuotes] = await Promise.all([
+          loadCSVFile('LEADS.csv'),
+          loadCSVFile('PROJECTS.csv'),
+          loadCSVFile('QUOTES.csv'),
+        ]);
+        leadsData = csvLeads;
+        projectsData = csvProjects;
+        quotesData = csvQuotes;
+      }
 
       setLeads(leadsData);
       setProjects(projectsData);
@@ -131,50 +144,56 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
         alert('Please fill in required fields');
         return;
       }
+      let updatedLeads;
       if (editingId) {
-        setLeads(leads.map(l => l.Lead_ID === editingId ? { ...formData, Lead_ID: editingId } : l));
+        updatedLeads = leads.map(l => l.Lead_ID === editingId ? { ...formData, Lead_ID: editingId } : l);
       } else {
         const newLead = {
           ...formData,
           Lead_ID: generateId('LEAD', leads),
           Date_Entered: new Date().toISOString().split('T')[0]
         };
-        setLeads([...leads, newLead]);
+        updatedLeads = [...leads, newLead];
       }
+      setLeads(updatedLeads);
+      saveLeads(updatedLeads);
     } else if (modalType === 'project') {
       if (!formData.Customer_Name || !formData.Sale_Amount) {
         alert('Please fill in required fields');
         return;
       }
+      let updatedProjects;
       if (editingId) {
-        setProjects(projects.map(p => p.Project_ID === editingId ? { ...formData, Project_ID: editingId } : p));
+        updatedProjects = projects.map(p => p.Project_ID === editingId ? { ...formData, Project_ID: editingId } : p);
       } else {
         const newProject = {
           ...formData,
           Project_ID: generateId('PROJ', projects)
         };
-        setProjects([...projects, newProject]);
+        updatedProjects = [...projects, newProject];
       }
+      setProjects(updatedProjects);
+      saveProjects(updatedProjects);
     } else if (modalType === 'quote') {
       if (!formData.Customer_Name || !formData.Total_Quote) {
         alert('Please fill in required fields');
         return;
       }
+      let updatedQuotes;
       if (editingId) {
-        setQuotes(quotes.map(q => q.Quote_ID === editingId ? { ...formData, Quote_ID: editingId } : q));
+        updatedQuotes = quotes.map(q => q.Quote_ID === editingId ? { ...formData, Quote_ID: editingId } : q);
       } else {
         const newQuote = {
           ...formData,
           Quote_ID: generateId('QUOTE', quotes),
           Date_Generated: new Date().toISOString().split('T')[0]
         };
-        setQuotes([...quotes, newQuote]);
+        updatedQuotes = [...quotes, newQuote];
       }
+      setQuotes(updatedQuotes);
+      saveQuotes(updatedQuotes);
     }
-    setMetrics(calculateMetrics(
-      modalType === 'quote' ? (editingId ? quotes.map(q => q.Quote_ID === editingId ? formData : q) : [...quotes, formData]) : quotes,
-      modalType === 'project' ? (editingId ? projects.map(p => p.Project_ID === editingId ? formData : p) : [...projects, formData]) : projects
-    ));
+    setMetrics(calculateMetrics(quotes, projects));
     setShowAddModal(false);
   };
 
@@ -183,11 +202,17 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
     if (!confirm('Are you sure you want to delete this record?')) return;
 
     if (type === 'lead') {
-      setLeads(leads.filter(l => l.Lead_ID !== id));
+      const updatedLeads = leads.filter(l => l.Lead_ID !== id);
+      setLeads(updatedLeads);
+      saveLeads(updatedLeads);
     } else if (type === 'project') {
-      setProjects(projects.filter(p => p.Project_ID !== id));
+      const updatedProjects = projects.filter(p => p.Project_ID !== id);
+      setProjects(updatedProjects);
+      saveProjects(updatedProjects);
     } else if (type === 'quote') {
-      setQuotes(quotes.filter(q => q.Quote_ID !== id));
+      const updatedQuotes = quotes.filter(q => q.Quote_ID !== id);
+      setQuotes(updatedQuotes);
+      saveQuotes(updatedQuotes);
     }
   };
 
