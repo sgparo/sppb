@@ -6,6 +6,16 @@ import './index.css';
 
 function App() {
   const [activePage, setActivePage] = useState('calculator');
+  const [quoteFromLead, setQuoteFromLead] = useState(null);
+
+  const handleCreateQuoteFromLead = (leadData) => {
+    setQuoteFromLead(leadData);
+    setActivePage('calculator');
+  };
+
+  const handleQuoteSaved = () => {
+    setQuoteFromLead(null);
+  };
 
   return (
     <div className="min-h-screen bg-slate-950">
@@ -45,8 +55,8 @@ function App() {
       </nav>
 
       {/* Page Content */}
-      {activePage === 'calculator' && <RoofingCalculator />}
-      {activePage === 'dashboard' && <Dashboard />}
+      {activePage === 'calculator' && <RoofingCalculator quoteFromLead={quoteFromLead} onQuoteSaved={handleQuoteSaved} />}
+      {activePage === 'dashboard' && <Dashboard onCreateQuoteFromLead={handleCreateQuoteFromLead} />}
     </div>
   );
 }

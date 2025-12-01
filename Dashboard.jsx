@@ -19,7 +19,7 @@ import {
 import { loadCSVFile, calculateMetrics } from './csvUtils';
 import FormModal from './FormModal';
 
-const Dashboard = () => {
+const Dashboard = ({ onCreateQuoteFromLead }) => {
   const [activeTab, setActiveTab] = useState('overview');
   const [leads, setLeads] = useState([]);
   const [projects, setProjects] = useState([]);
@@ -103,15 +103,25 @@ const Dashboard = () => {
 
   // Create quote from lead
   const createQuoteFromLead = (lead) => {
-    setModalType('quote');
-    setEditingId(null);
-    setFormData({
-      Lead_ID: lead.Lead_ID,
-      Customer_Name: lead.Customer_Name,
-      Roof_Area_Squares: lead.Squares_Est,
-      Status: 'PENDING',
-    });
-    setShowAddModal(true);
+    // Use callback to switch to calculator and pre-fill with lead data
+    if (onCreateQuoteFromLead) {
+      onCreateQuoteFromLead({
+        Lead_ID: lead.Lead_ID,
+        Customer_Name: lead.Customer_Name,
+        Roof_Area_Squares: lead.Squares_Est,
+      });
+    } else {
+      // Fallback for dashboard modal if callback not available
+      setModalType('quote');
+      setEditingId(null);
+      setFormData({
+        Lead_ID: lead.Lead_ID,
+        Customer_Name: lead.Customer_Name,
+        Roof_Area_Squares: lead.Squares_Est,
+        Status: 'PENDING',
+      });
+      setShowAddModal(true);
+    }
   };
 
   // Save record

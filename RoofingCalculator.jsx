@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import materialsData from './materialsData.json';
 
-const RoofingCalculator = () => {
+const RoofingCalculator = ({ quoteFromLead, onQuoteSaved }) => {
   // --- State Management ---
   const [homeFootprintArea, setHomeFootprintArea] = useState(2500); // sq ft
   const [basePricePerSq, setBasePricePerSq] = useState(785); // Default: $785/sq (Insurance pricing)
@@ -33,6 +33,15 @@ const RoofingCalculator = () => {
   const [solarRrPrice, setSolarRrPrice] = useState(150); // $ per panel (CO Avg $150-$200)
   const [needsElecUpgrade, setNeedsElecUpgrade] = useState(false);
   const [elecUpgradeCost, setElecUpgradeCost] = useState(1200);
+
+  // --- Pre-fill from lead data ---
+  useEffect(() => {
+    if (quoteFromLead && quoteFromLead.Roof_Area_Squares) {
+      // Convert squares to roof area (1 square = 100 sq ft)
+      const roofArea = parseInt(quoteFromLead.Roof_Area_Squares) * 100;
+      setHomeFootprintArea(roofArea);
+    }
+  }, [quoteFromLead]);
 
   // --- Helper Functions ---
   const getPitchMultiplier = (pitchValue) => {
@@ -152,6 +161,23 @@ const RoofingCalculator = () => {
             Print Quote
           </button>
         </header>
+
+        {quoteFromLead && (
+          <div className="bg-blue-900/30 border border-blue-700/50 rounded-lg p-4 flex items-center justify-between gap-4">
+            <div>
+              <p className="font-semibold text-blue-300">Creating Quote for: <span className="text-white">{quoteFromLead.Customer_Name}</span></p>
+              <p className="text-sm text-blue-200 mt-1">Lead ID: {quoteFromLead.Lead_ID} • Estimated Squares: {quoteFromLead.Roof_Area_Squares}</p>
+            </div>
+            <button
+              onClick={() => {
+                if (onQuoteSaved) onQuoteSaved();
+              }}
+              className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium transition-colors text-sm whitespace-nowrap"
+            >
+              Save Quote
+            </button>
+          </div>
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
