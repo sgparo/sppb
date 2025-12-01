@@ -15,12 +15,14 @@ import {
   Trash2,
   Edit2,
   X,
-  Eye
+  Eye,
+  MessageSquare
 } from 'lucide-react';
 import { loadCSVFile, calculateMetrics } from './csvUtils';
 import { getQuotes, saveQuotes, getLeads, saveLeads, getProjects, saveProjects } from './storageUtils';
 import FormModal from './FormModal';
 import QuoteViewer from './QuoteViewer';
+import NotesModal from './NotesModal';
 
 const Dashboard = ({ onCreateQuoteFromLead }) => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -41,6 +43,11 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
   // Quote viewer state
   const [selectedQuote, setSelectedQuote] = useState(null);
   const [showQuoteViewer, setShowQuoteViewer] = useState(false);
+
+  // Notes modal state
+  const [selectedNotes, setSelectedNotes] = useState(null);
+  const [notesCustomerName, setNotesCustomerName] = useState('');
+  const [showNotesModal, setShowNotesModal] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
@@ -149,6 +156,13 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
   const handleViewQuote = (quote) => {
     setSelectedQuote(quote);
     setShowQuoteViewer(true);
+  };
+
+  // View notes
+  const handleViewNotes = (customerName, notes) => {
+    setNotesCustomerName(customerName);
+    setSelectedNotes(notes);
+    setShowNotesModal(true);
   };
 
   // Accept quote and create project
@@ -507,6 +521,13 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
                               + Quote
                             </button>
                             <button
+                              onClick={() => handleViewNotes(lead.Customer_Name, lead.Notes)}
+                              className="text-slate-400 hover:text-slate-200"
+                              title="View customer notes"
+                            >
+                              <MessageSquare className="w-4 h-4" />
+                            </button>
+                            <button
                               onClick={() => openEditModal('lead', lead)}
                               className="text-blue-400 hover:text-blue-300"
                             >
@@ -599,6 +620,13 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
                         <td className="px-6 py-4 text-slate-300">{fmtCurrency(proj.Deposit_Amount)}</td>
                         <td className="px-6 py-4">
                           <div className="flex gap-2">
+                            <button
+                              onClick={() => handleViewNotes(proj.Customer_Name, proj.Notes)}
+                              className="text-slate-400 hover:text-slate-200"
+                              title="View project notes"
+                            >
+                              <MessageSquare className="w-4 h-4" />
+                            </button>
                             <button
                               onClick={() => openEditModal('project', proj)}
                               className="text-blue-400 hover:text-blue-300"
@@ -725,6 +753,13 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
                               </>
                             )}
                             <button
+                              onClick={() => handleViewNotes(quote.Customer_Name, quote.Notes)}
+                              className="text-slate-400 hover:text-slate-200"
+                              title="View quote notes"
+                            >
+                              <MessageSquare className="w-4 h-4" />
+                            </button>
+                            <button
                               onClick={() => openEditModal('quote', quote)}
                               className="text-blue-400 hover:text-blue-300"
                             >
@@ -772,6 +807,15 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
         <QuoteViewer
           quote={selectedQuote}
           onClose={() => setShowQuoteViewer(false)}
+        />
+      )}
+
+      {/* Notes Modal */}
+      {showNotesModal && (
+        <NotesModal
+          customerName={notesCustomerName}
+          notes={selectedNotes}
+          onClose={() => setShowNotesModal(false)}
         />
       )}
     </div>
