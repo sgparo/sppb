@@ -149,6 +149,52 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
     setShowQuoteViewer(true);
   };
 
+  // Accept quote and create project
+  const handleAcceptQuote = (quote) => {
+    // Update quote status to ACCEPTED
+    const updatedQuotes = quotes.map(q =>
+      q.Quote_ID === quote.Quote_ID
+        ? { ...q, Status: 'ACCEPTED' }
+        : q
+    );
+    setQuotes(updatedQuotes);
+    saveQuotes(updatedQuotes);
+
+    // Create a project using the quote data
+    const newProject = {
+      Project_ID: quote.Lead_ID, // Use Lead_ID as Project_ID
+      Lead_ID: quote.Lead_ID,
+      Customer_Name: quote.Customer_Name,
+      Project_Address: '', // User can fill this in later
+      Status: 'SCHEDULED',
+      Date_Sold: new Date().toISOString().split('T')[0],
+      Sale_Amount: quote.Total_Quote,
+      Deposit_Amount: quote.Deposit_Required,
+      Deposit_Date: new Date().toISOString().split('T')[0],
+      Scheduled_Start: '',
+      Scheduled_Complete: '',
+      Project_Manager: '',
+      Notes: `Created from Quote ${quote.Quote_ID}`
+    };
+
+    const updatedProjects = [...projects, newProject];
+    setProjects(updatedProjects);
+    saveProjects(updatedProjects);
+
+    alert(`Quote accepted! Project created for ${quote.Customer_Name}`);
+  };
+
+  // Decline quote
+  const handleDeclineQuote = (quote) => {
+    const updatedQuotes = quotes.map(q =>
+      q.Quote_ID === quote.Quote_ID
+        ? { ...q, Status: 'DECLINED' }
+        : q
+    );
+    setQuotes(updatedQuotes);
+    saveQuotes(updatedQuotes);
+  };
+
   // Save record
   const handleSave = () => {
     if (modalType === 'lead') {
@@ -642,7 +688,7 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
                           </span>
                         </td>
                         <td className="px-6 py-4">
-                          <div className="flex gap-2">
+                          <div className="flex gap-2 flex-wrap">
                             <button
                               onClick={() => handleViewQuote(quote)}
                               className="text-emerald-400 hover:text-emerald-300"
@@ -650,6 +696,24 @@ const Dashboard = ({ onCreateQuoteFromLead }) => {
                             >
                               <Eye className="w-4 h-4" />
                             </button>
+                            {quote.Status === 'PENDING' && (
+                              <>
+                                <button
+                                  onClick={() => handleAcceptQuote(quote)}
+                                  className="text-xs px-2 py-1 bg-green-600/30 hover:bg-green-600/50 text-green-300 rounded transition-colors"
+                                  title="Accept quote and create project"
+                                >
+                                  Accept
+                                </button>
+                                <button
+                                  onClick={() => handleDeclineQuote(quote)}
+                                  className="text-xs px-2 py-1 bg-red-600/30 hover:bg-red-600/50 text-red-300 rounded transition-colors"
+                                  title="Decline quote"
+                                >
+                                  Decline
+                                </button>
+                              </>
+                            )}
                             <button
                               onClick={() => openEditModal('quote', quote)}
                               className="text-blue-400 hover:text-blue-300"
